@@ -1,28 +1,4 @@
 import random
-import sys
-wordlist = "words.txt"
-
-selection = None
-while selection !="0":
-    print('''
-    -------------------
-    Welcome to Hangman
-    -------------------
-    Please select  a menu option:
-    0 - Exit
-    1 - Play Game
-
-''')
-
-selection=input("Do you want to play?:")
-
-if selection == "0":
-    sys.exit("Bye Bye")
-    elif selection =="1":
-
-
-
-
 
 hangman_diagram = ["""
 SAVE ME PLEASE- YOU HAVE 6 LIFELINES
@@ -88,3 +64,27 @@ BYE BYE- TAKE CARE!
  / \  |
       |
 ========="""]
+
+
+def randomWord():
+  myword = random.choice(open ('/words.txt').read().split().strip())
+  return myword
+
+def board(hangman_display, skippedLetters, correctLetters, hiddenWord):
+  print(hangman_diagram[len(skippedLetters)])
+  print()
+
+  print('Missed Letters:', end='')
+  for letter in skippedLetters:
+    print(letter, end='')
+  print("\n")
+
+  blanks = '_' * len(hiddenWord)
+
+  for i in range(len(hiddenWord)):
+    if hiddenWord[i] in correctLetters:
+      blanks = blanks[:i] + hiddenWord[i] + blanks[i+1:]
+      for letter in blanks:
+        print(letter, end='')
+      print("\n")
+
